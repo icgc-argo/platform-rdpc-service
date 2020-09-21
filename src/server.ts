@@ -30,8 +30,8 @@ console.log('in server.ts');
   const appConfig = await getAppConfig();
 
   /**
-   * Migrate mongo config requires exact undefined to be able to connect to db without user/password (dev/qa) env
-   * if the value is undefined or empty string we have to avoid setting it in the env because process.env will force string "undefined"
+   * This check is to avoid setting falsy value for user/pass if there is no user pass provided because process.env will force string "undefined"
+   * which will fail the auth (used by migrate mongo config file).
    */
   const mongoProps = appConfig.mongoProperties;
   if (mongoProps.mongoUser && mongoProps.mongoPassword) {
@@ -89,6 +89,8 @@ console.log('in server.ts');
       reconnectTries: 10,
       reconnectInterval: 3000,
       useNewUrlParser: true,
+      user: appConfig.mongoProperties.mongoUser,
+      pass: appConfig.mongoProperties.mongoPassword,
     });
   } catch (err) {
     logger.error('MongoDB connection error. Please make sure MongoDB is running. ' + err);
