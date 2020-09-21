@@ -34,9 +34,9 @@ console.log('in server.ts');
    * which will fail the auth (used by migrate mongo config file).
    */
   const mongoProps = appConfig.mongoProperties;
-  if (mongoProps.mongoUser && mongoProps.mongoPassword) {
-    process.env.DB_USERNAME = mongoProps.mongoUser;
-    process.env.DB_PASSWORD = mongoProps.mongoPassword;
+  if (mongoProps.dbUser && mongoProps.dbPassword) {
+    process.env.DB_USERNAME = mongoProps.dbUser;
+    process.env.DB_PASSWORD = mongoProps.dbPassword;
   }
 
   let connection: any;
@@ -81,7 +81,7 @@ console.log('in server.ts');
   });
 
   try {
-    await mongoose.connect(appConfig.mongoProperties.mongoUrl, {
+    await mongoose.connect(appConfig.mongoProperties.dbUrl, {
       autoReconnect: true,
       socketTimeoutMS: 10000,
       connectTimeoutMS: 30000,
@@ -89,8 +89,8 @@ console.log('in server.ts');
       reconnectTries: 10,
       reconnectInterval: 3000,
       useNewUrlParser: true,
-      user: appConfig.mongoProperties.mongoUser,
-      pass: appConfig.mongoProperties.mongoPassword,
+      user: appConfig.mongoProperties.dbUser,
+      pass: appConfig.mongoProperties.dbPassword,
     });
   } catch (err) {
     logger.error('MongoDB connection error. Please make sure MongoDB is running. ' + err);
