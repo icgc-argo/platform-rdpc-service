@@ -11,10 +11,7 @@
     "build": "npm run build-ts && npm run resources && npm run tslint",
     "debug": "npm run build && sleep 3 && npm run watch-debug",
     "watch-debug": "nodemon --watch 'src/**/*.ts' --exec node --inspect -r ts-node/register ./src/server.ts",
-    "test": "mocha -r ts-node/register src/test/**/*.spec.ts",
-    "migrate-up": "migrate-mongo up",
-    "migrate-down": "migrate-mongo down",
-    "migrate-status": "migrate-mongo status"
+    "test": "mocha -r ts-node/register src/test/**/*.spec.ts"
   },
   "repository": {
     "type": "git",
